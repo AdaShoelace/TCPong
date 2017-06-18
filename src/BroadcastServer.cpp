@@ -34,11 +34,10 @@ void BroadcastServer::listenForBroadcast()
         }
         else if(sender.toInteger() != myAddress.toInteger())
         {
-            std::string str;
-            packet >> str;
             std::cout << "sender: " << sender << std::endl;
             std::cout << "my address: " << myAddress << std::endl;
-            std::cout << str << std::endl;
+            std::cout << packet << std::endl;
+            controller.receivedBroadcast(sender);
         }
     }
 }
