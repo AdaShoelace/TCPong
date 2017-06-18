@@ -14,6 +14,7 @@ BroadcastServer::~BroadcastServer()
 
 void BroadcastServer::sendBroadcast()
 {
+    std::cout << "Sending broadcast!" << std::endl;
     sf::Packet BroadcastPacket;
     BroadcastPacket<<"Hello world";
     listener.send(BroadcastPacket, broadcastAddress, BROADCAST_PORT);
@@ -37,6 +38,10 @@ void BroadcastServer::listenForBroadcast()
             std::string str(data);
             std::cout << sender << std::endl;
             std::cout << str << std::endl;
+        }
+        else
+        {
+          std::cout << "Some douchebag is spamming my port. It might be myself" << std::endl;
         }
 
     }
