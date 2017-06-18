@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-#define BROADCAST_PORT 666
+#define BROADCAST_PORT 26385
 
 class BroadcastServer
 {

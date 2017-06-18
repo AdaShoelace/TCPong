@@ -8,6 +8,11 @@ BroadcastServer::BroadcastServer()
     broadcastAddress = address.Broadcast;
 }
 
+BroadcastServer::~BroadcastServer()
+{
+
+}
+
 void BroadcastServer::sendBroadcast()
 {
     sf::Packet BroadcastPacket;
@@ -36,3 +41,4 @@ void BroadcastServer::listenForBroadcast()
 
     }
 }
+

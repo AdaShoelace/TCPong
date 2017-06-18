@@ -1,8 +1,5 @@
-Pong: BroadcastServer.o
-	g++ -std=c++11 -o Pong main.cpp BroadcastServer.o -lsfml-window -lsfml-system -lsfml-graphics
-
-BroadcastServer.o:
-	g++ -std=c++11 -c BroadcastServer.cpp -lpthread
+Pong: 
+	g++ -Wall -std=c++11 -pthread -o Pong main.cpp BroadcastServer.cpp -lsfml-window -lsfml-system -lsfml-graphics -lsfml-network
 
 clean:
-	rm -rf pong
+	rm -rf Pong
