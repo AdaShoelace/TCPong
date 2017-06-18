@@ -1,16 +1,18 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../include/BroadcastServer.h"
+
 
 int main()
 {
-    
+
     const int PADDLE_STEP = 80;
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Pong");
     window.setVerticalSyncEnabled(true);
     sf::Event event;
-    
+
     sf::Vector2u screenSize = window.getSize();
     const int SCREEN_WIDTH = screenSize.x;
     std::cout << SCREEN_WIDTH << " width " << std::endl;
@@ -29,15 +31,17 @@ int main()
     sf::Clock clock;
     sf::Time deltaTime;
 
+    BroadcastServer broadcastServer;
+
     while(window.isOpen())
     {
         while(window.pollEvent(event))
         {
             if(event.type == sf::Event::Closed)
             {
-                window.close(); 
+                window.close();
             }
-            
+
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
             {
                 leftPaddlePos.y += PADDLE_STEP;
