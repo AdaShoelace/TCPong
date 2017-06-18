@@ -50,6 +50,10 @@ int main()
             {
                 leftPaddlePos.y -= PADDLE_STEP;
             }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+            {
+                broadcastServer.sendBroadcast();
+            }
         }
         deltaTime = clock.restart();
         leftPaddle.setPosition(leftPaddlePos);

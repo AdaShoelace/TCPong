@@ -4,8 +4,7 @@ BroadcastServer::BroadcastServer()
 : t1(&BroadcastServer::listenForBroadcast, this)
 {
     listener.bind(BROADCAST_PORT);
-    sf::IpAddress address;
-    broadcastAddress = address.Broadcast;
+    broadcastAddress = myAddress.Broadcast;
 }
 
 BroadcastServer::~BroadcastServer()
@@ -33,12 +32,12 @@ void BroadcastServer::listenForBroadcast()
         {
             std::cerr << "Broadcast reception failed!" << std::endl;
         }
-        else
+        else if(sender.getLocalAddress() != myAddress.getLocalAddress())
         {
             std::string str(data);
+            std::cout << sender << std::endl;
             std::cout << str << std::endl;
         }
 
     }
 }
-

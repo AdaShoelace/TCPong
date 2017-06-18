@@ -17,6 +17,7 @@ class BroadcastServer
         void listenForBroadcast();
     private:
         sf::UdpSocket listener;
+        sf::IpAddress myAddress;
         sf::IpAddress broadcastAddress;
         std::thread t1;
 };
