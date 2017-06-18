@@ -33,15 +33,17 @@ void BroadcastServer::listenForBroadcast()
         {
             std::cerr << "Broadcast reception failed!" << std::endl;
         }
-        else if(sender.getLocalAddress() != myAddress.getLocalAddress())
+        else if(sender.toInteger() != myAddress.getLocalAddress().toInteger())
         {
             std::string str(data);
-            std::cout << sender << std::endl;
+            std::cout << "sender: " << sender << std::endl;
+            std::cout << "my address: " << myAddress << std::endl;
             std::cout << str << std::endl;
         }
         else
         {
-          std::cout << "Some douchebag is spamming my port. It might be myself" << std::endl;
+          std::cout << "Some douchebag is spamming my port. It might be myself:" << std::endl;
+          std::cout << sender << std::endl;
         }
 
     }
