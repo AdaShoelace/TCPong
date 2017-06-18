@@ -1,7 +1,7 @@
 #include "../include/BroadcastServer.h"
 
 BroadcastServer::BroadcastServer()
-: t1(&BroadcastServer::listenForBroadcast, this)
+: myAddress(myAddress.getLocalAddress()), t1(&BroadcastServer::listenForBroadcast, this)
 {
     listener.bind(BROADCAST_PORT);
     broadcastAddress = myAddress.Broadcast;
@@ -22,29 +22,21 @@ void BroadcastServer::sendBroadcast()
 
 void BroadcastServer::listenForBroadcast()
 {
-    char data[100];
-    std::size_t received;
+    sf::Packet packet;
     sf::IpAddress sender;
     unsigned short port = BROADCAST_PORT;
     while (1)
     {
-        if(listener.receive(data, 100, received, sender, port)
-        != sf::Socket::Done)
+        if(listener.receive(packet, sender, port)
+            != sf::Socket::Done)
         {
             std::cerr << "Broadcast reception failed!" << std::endl;
         }
-        else if(sender.toInteger() != myAddress.getLocalAddress().toInteger())
+        else if(sender.toInteger() != myAddress.toInteger())
         {
-            std::string str(data);
             std::cout << "sender: " << sender << std::endl;
             std::cout << "my address: " << myAddress << std::endl;
-            std::cout << str << std::endl;
+            std::cout << packet << std::endl;
         }
-        else
-        {
-          std::cout << "Some douchebag is spamming my port. It might be myself:" << std::endl;
-          std::cout << sender << std::endl;
-        }
-
     }
 }
