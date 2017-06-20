@@ -1,7 +1,7 @@
 #include "../include/BroadcastServer.h"
 
-BroadcastServer::BroadcastServer()
-: myAddress(myAddress.getLocalAddress()), t1(&BroadcastServer::listenForBroadcast, this)
+BroadcastServer::BroadcastServer(Controller& controller)
+: controller(controller), myAddress(myAddress.getLocalAddress()), t1(&BroadcastServer::listenForBroadcast, this)
 {
     listener.bind(BROADCAST_PORT);
     broadcastAddress = myAddress.Broadcast;
