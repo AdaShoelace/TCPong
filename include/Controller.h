@@ -4,8 +4,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "../include/BroadcastServer.h"
-#include "../include/Server.h"
+#include "BroadcastServer.h"
+#include "Server.h"
 
 enum{PRE_GAME, PLAYING, DECIDING};
 
@@ -28,7 +28,7 @@ class Controller
         BroadcastServer bServer;
         Server server;
 
-        const int PADDLE_STEP = 80;
+        const int PADDLE_STEP;;
 
         sf::RenderWindow window; 
         

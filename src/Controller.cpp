@@ -2,6 +2,7 @@
 
 
 Controller::Controller()
+    : server(*this), bServer(*this),PADDLE_STEP(80)
 {
     preOrPlaying = PRE_GAME;
 }
@@ -44,7 +45,7 @@ void Controller::run()
     sf::Clock clock;
     sf::Time deltaTime;
 
-    BroadcastServer broadcastServer;
+    BroadcastServer broadcastServer(*this);
 
     while(window.isOpen())
     {

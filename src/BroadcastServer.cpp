@@ -1,4 +1,5 @@
 #include "../include/BroadcastServer.h"
+#include "../include/Controller.h"
 
 BroadcastServer::BroadcastServer(Controller& controller)
 : controller(controller), myAddress(myAddress.getLocalAddress()), t1(&BroadcastServer::listenForBroadcast, this)

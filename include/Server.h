@@ -3,7 +3,8 @@
 
 #include <SFML/Network.hpp>
 #include <thread>
-#include "../include/Controller.h"
+
+class Controller;
 
 class Server
 {

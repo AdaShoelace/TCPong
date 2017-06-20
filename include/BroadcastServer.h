@@ -8,10 +8,12 @@
 
 #define BROADCAST_PORT 26385
 
+class Controller;
+
 class BroadcastServer
 {
     public:
-        BroadcastServer();
+        BroadcastServer(Controller& controller);
         ~BroadcastServer();
         void sendBroadcast();
         void listenForBroadcast();
@@ -19,6 +21,7 @@ class BroadcastServer
         sf::UdpSocket listener;
         sf::IpAddress myAddress;
         sf::IpAddress broadcastAddress;
+        Controller& controller;
         std::thread t1;
 };
 
