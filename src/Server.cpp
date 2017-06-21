@@ -3,9 +3,11 @@
 #include <iostream>
 
 Server::Server(Controller& controller)
-    : controller(controller), listeningThread(&Server::listen, this)
+    : controller(controller),
+    listeningThread(&Server::listen, this),
+    talkThread(&Server::talk, this)
 {
-    listeningState = PRE_GAME; 
+    listeningState = PRE_GAME;
 }
 
 Server::~Server()
@@ -18,7 +20,7 @@ void Server::listen()
     bool listening = true;
     if(listener.listen(53000) != sf::Socket::Done)
     {
-        listening = false; 
+        listening = false;
         std::clog << "listening failed :(" << std::endl;
     }
 
@@ -36,7 +38,14 @@ void Server::listen()
                 session.send(to_send);
             }
         }
-        else if(listeningState == PLAYING)
+    }
+}
+
+void Server::Talk()
+{
+    while(true)
+    {
+        if(listeningState == PLAYING)
         {
             sf::TcpSocket::Status status = session.receive(packet);
             switch(status)
@@ -47,19 +56,22 @@ void Server::listen()
                         packet << message;
                         if(message == "Okej!")
                         {
-                            std::clog << "Received okay!" << std::endl; 
+                            std::clog << "Received okay!" << std::endl;
                         }
                         break;
                     }
 
                 case sf::TcpSocket::Disconnected: case sf::TcpSocket::Error:
                     listeningState = PRE_GAME;
+                    controller.failedConnection();
                     std::clog << "Shit went south!" << std::endl;
                     break;
 
                 case sf::TcpSocket::NotReady:
-                    //Probably connecting at the moment
+                    std::clog << "Not ready..." << std::endl;
                     break;
+                default:
+                    std::clog << "Default switch case in Server.cpp" << std::endl;
             }
         }
     }

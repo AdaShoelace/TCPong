@@ -13,13 +13,15 @@ class Server
         Server(Controller& controller);
         ~Server();
         void accept(std::string ipAddress);
-        
+
     private:
         void listen();
+        void talk();
         sf::TcpListener listener;
         Controller& controller;
         int listeningState;
         std::thread listeningThread;
+        std::thread talkThread;
         sf::TcpSocket session;
 };
 
