@@ -15,8 +15,15 @@ Server::~Server()
 
 void Server::listen()
 {
+    bool listening = true;
+    if(listener.listen(53000) != sf::Socket::Done)
+    {
+        listening = false; 
+        std::clog << "listening failed :(" << std::endl;
+    }
+
     sf::Packet packet;
-    while(true)
+    while(listening)
     {
         if(listeningState == PRE_GAME)
         {
