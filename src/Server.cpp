@@ -31,7 +31,8 @@ void Server::listen()
             {
                 listeningState = PLAYING;
                 sf::Packet to_send;
-                to_send >> "Okej!";
+                std::string asd = "Okej!";
+                to_send << asd;
                 session.send(to_send);
             }
         }

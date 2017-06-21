@@ -39,10 +39,9 @@ void BroadcastServer::listenForBroadcast()
         {
             std::cout << "sender: " << sender << std::endl;
             std::cout << "my address: " << myAddress << std::endl;
-            sf::String packetData;
+            std::string packetData;
             packet >> packetData;
-            std::string asd = packetData.toAnsiString();
-            std::cout << asd << std::endl;
+            std::cout << packetData << std::endl;
             controller.receivedBroadcast(sender);
         }
     }

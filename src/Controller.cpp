@@ -5,6 +5,8 @@ Controller::Controller()
     : server(*this), bServer(*this),PADDLE_STEP(80)
 {
     preOrPlaying = PRE_GAME;
+    font.loadFromFile("Roboto-Bold.ttf");
+    
 }
 
 Controller::~Controller()
@@ -43,6 +45,7 @@ void Controller::run()
     sf::Clock clock;
     sf::Time deltaTime;
 
+
     while(window.isOpen())
     {
         window.clear();
@@ -73,6 +76,10 @@ void Controller::preGame()
     {
         bServer.sendBroadcast();
     }
+
+    sf::Text text("PRE_GAME", font, 30);
+    text.setColor(sf::Color::White);
+    window.draw(text);
 }
 
 void Controller::playing(sf::Time time)
@@ -81,18 +88,25 @@ void Controller::playing(sf::Time time)
     rightPaddle.setPosition(rightPaddlePos);
     window.draw(leftPaddle);
     window.draw(rightPaddle);
+    sf::Text text("PLAYING", font, 30);
+    text.setColor(sf::Color::White);
+    window.draw(text);
 }
 
 void Controller::deciding()
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) 
     {
-        //TODO server.accept implement that shit 
+        server.accept(senderAddress);
+        preOrPlaying = PLAYING;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
         preOrPlaying = PRE_GAME; 
     }
+    sf::Text text("DECIDING", font, 30);
+    text.setColor(sf::Color::White);
+    window.draw(text);
 }
 
 void Controller::failedConnection()

@@ -26,6 +26,7 @@ class Controller
     private:
         int preOrPlaying;
         bool isLeft;
+        sf::Font font;
         std::string senderAddress;
         void initGame();
         Server server;
