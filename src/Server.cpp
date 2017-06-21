@@ -41,8 +41,9 @@ void Server::listen()
     }
 }
 
-void Server::Talk()
+void Server::talk()
 {
+    sf::Packet packet;
     while(true)
     {
         if(listeningState == PLAYING)
