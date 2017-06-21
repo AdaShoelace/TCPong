@@ -39,16 +39,13 @@ void Controller::initGame()
 
 void Controller::run()
 {
-
-    sf::Event event;
-
+    initGame();
     sf::Clock clock;
     sf::Time deltaTime;
 
-    BroadcastServer broadcastServer(*this);
-
     while(window.isOpen())
     {
+        window.clear();
 
         switch(preOrPlaying)
         {
@@ -57,7 +54,7 @@ void Controller::run()
                 break;
 
             case PLAYING:
-                playing();
+                playing(deltaTime);
                 break;
 
             case DECIDING:
@@ -65,32 +62,7 @@ void Controller::run()
                 break;
         }
 
-        while(window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
-                leftPaddlePos.y += PADDLE_STEP;
-            }
-            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                leftPaddlePos.y -= PADDLE_STEP;
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-            {
-                broadcastServer.sendBroadcast();
-            }
-        }
         deltaTime = clock.restart();
-        leftPaddle.setPosition(leftPaddlePos);
-        rightPaddle.setPosition(rightPaddlePos);
-        window.clear();
-        window.draw(leftPaddle);
-        window.draw(rightPaddle);
         window.display();
     }
 }
@@ -99,11 +71,50 @@ void Controller::preGame()
 {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
     {
-        preOrPlaying = PLAYING;
-        //TODO send senderAddress to server
+        bServer.sendBroadcast();
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+}
+
+void Controller::playing(sf::Time time)
+{
+    leftPaddle.setPosition(leftPaddlePos);
+    rightPaddle.setPosition(rightPaddlePos);
+    window.draw(leftPaddle);
+    window.draw(rightPaddle);
+}
+
+void Controller::deciding()
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) 
     {
-         
+        //TODO server.accept implement that shit 
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        preOrPlaying = PRE_GAME; 
+    }
+}
+
+void Controller::failedConnection()
+{
+    preOrPlaying = PRE_GAME;
+}
+
+void Controller::successfullyConnected(bool isLeft)
+{
+    this->isLeft = isLeft; 
+    preOrPlaying = PLAYING;
+}
+
+void Controller::checkPollEvent()
+{
+    sf::Event event;
+
+    while(window.pollEvent(event))
+    {
+        if(event.type == sf::Event::Closed)
+        {
+            window.close();
+        }
     }
 }

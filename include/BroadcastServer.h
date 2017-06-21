@@ -17,11 +17,12 @@ class BroadcastServer
         ~BroadcastServer();
         void sendBroadcast();
         void listenForBroadcast();
+
     private:
         sf::UdpSocket listener;
-        sf::IpAddress myAddress;
         sf::IpAddress broadcastAddress;
         Controller& controller;
+        sf::IpAddress myAddress;
         std::thread t1;
 };
 

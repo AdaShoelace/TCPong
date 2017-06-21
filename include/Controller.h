@@ -17,18 +17,21 @@ class Controller
         void run();
         void receivedBroadcast(const sf::IpAddress& sender);
         void preGame();
-        void playing();
+        void playing(sf::Time time);
         void deciding();
-        std::vector<int> checkPollEvent();  //holds the eventloop 
+        void checkPollEvent();  //holds the eventloop 
+        void failedConnection();
+        void successfullyConnected(bool isLeft);
 
     private:
         int preOrPlaying;
+        bool isLeft;
         std::string senderAddress;
         void initGame();
-        BroadcastServer bServer;
         Server server;
+        BroadcastServer bServer;
 
-        const int PADDLE_STEP;;
+        const int PADDLE_STEP;
 
         sf::RenderWindow window; 
         
