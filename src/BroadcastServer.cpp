@@ -1,5 +1,6 @@
 #include "../include/BroadcastServer.h"
 #include "../include/Controller.h"
+#include <SFML/System.hpp>
 
 BroadcastServer::BroadcastServer(Controller& controller)
 : controller(controller), myAddress(myAddress.getLocalAddress()), t1(&BroadcastServer::listenForBroadcast, this)
@@ -17,7 +18,8 @@ void BroadcastServer::sendBroadcast()
 {
     std::cout << "Sending broadcast!" << std::endl;
     sf::Packet BroadcastPacket;
-    BroadcastPacket<<"Hello world";
+    std::string hello = "Hello world";
+    BroadcastPacket << hello;
     listener.send(BroadcastPacket, broadcastAddress, BROADCAST_PORT);
 }
 
@@ -37,7 +39,10 @@ void BroadcastServer::listenForBroadcast()
         {
             std::cout << "sender: " << sender << std::endl;
             std::cout << "my address: " << myAddress << std::endl;
-            std::cout << packet << std::endl;
+            sf::String packetData;
+            packet >> packetData;
+            std::string asd = packetData.toAnsiString();
+            std::cout << asd << std::endl;
             controller.receivedBroadcast(sender);
         }
     }
