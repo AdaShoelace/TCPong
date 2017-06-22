@@ -31,11 +31,13 @@ void Server::listen()
         {
             if(listener.accept(session) == sf::TcpListener::Done)
             {
+                std::clog << "Accepting connection!" << std::endl;
                 listeningState = PLAYING;
                 sf::Packet to_send;
                 std::string asd = "Okej!";
                 to_send << asd;
                 session.send(to_send);
+                controller.successfullyConnected(true);
             }
         }
     }
@@ -54,7 +56,8 @@ void Server::talk()
                 case sf::TcpSocket::Done:
                     {
                         std::string message;
-                        packet << message;
+                        packet >> message;
+                        std::clog << "Message from player:" << message << std::endl;
                         if(message == "Okej!")
                         {
                             std::clog << "Received okay!" << std::endl;
