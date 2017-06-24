@@ -72,9 +72,14 @@ void Controller::run()
 
 void Controller::preGame()
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+    sf::Event event;
+
+    if(window.pollEvent(event))
     {
-        bServer.sendBroadcast();
+        if(event.type == sf::Event::KeyReleased) 
+        {
+            bServer.sendBroadcast(); 
+        }
     }
 
     sf::Text text("PRE_GAME", font, 30);
