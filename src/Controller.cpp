@@ -90,6 +90,33 @@ void Controller::preGame()
 
 void Controller::playing(sf::Time time)
 {
+    sf::Event event;
+    while(window.pollEvent(event))
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            if(isLeft)
+            {
+                leftPaddlePos.y -= (window.getSize().y/10) * time.asSeconds();
+            }
+            else
+            {
+                rightPaddlePos.y -= (window.getSize().y/10) * time.asSeconds();
+            }
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            if(isLeft)
+            {
+                leftPaddlePos.y += (window.getSize().y/10) * time.asSeconds();
+            }
+            else
+            {
+                rightPaddlePos.y += (window.getSize().y/10) * time.asSeconds();
+            }
+        }
+    }
     leftPaddle.setPosition(leftPaddlePos);
     rightPaddle.setPosition(rightPaddlePos);
     window.draw(leftPaddle);
