@@ -76,15 +76,16 @@ void Controller::preGame()
 
     if(window.pollEvent(event))
     {
-        if(event.type == sf::Event::KeyReleased) 
+        if(event.type == sf::Event::KeyReleased
+            && event.key.code == sf::Keyboard::Return)
         {
             bServer.sendBroadcast(); 
         }
     }
 
     sf::Text text("PRE_GAME", font, 30);
-    text.setColor(sf::Color::White);
     window.draw(text);
+    text.setFillColor(sf::Color::White);
 }
 
 void Controller::playing(sf::Time time)
@@ -94,7 +95,7 @@ void Controller::playing(sf::Time time)
     window.draw(leftPaddle);
     window.draw(rightPaddle);
     sf::Text text("PLAYING", font, 30);
-    text.setColor(sf::Color::White);
+    text.setFillColor(sf::Color::White);
     window.draw(text);
 }
 
@@ -110,7 +111,7 @@ void Controller::deciding()
         preOrPlaying = PRE_GAME; 
     }
     sf::Text text("DECIDING", font, 30);
-    text.setColor(sf::Color::White);
+    text.setFillColor(sf::Color::White);
     window.draw(text);
 }
 
