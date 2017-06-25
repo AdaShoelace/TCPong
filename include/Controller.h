@@ -6,6 +6,7 @@
 #include <vector>
 #include "BroadcastServer.h"
 #include "Server.h"
+#include "json.hpp"
 
 enum{PRE_GAME, PLAYING, DECIDING};
 
@@ -22,6 +23,7 @@ class Controller
         void checkPollEvent();  //holds the eventloop 
         void failedConnection();
         void successfullyConnected(bool isLeft);
+        void receivedData(nlohmann::json j);
 
     private:
         int preOrPlaying;

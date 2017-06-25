@@ -13,6 +13,7 @@ class Server
         Server(Controller& controller);
         ~Server();
         void accept(std::string ipAddress);
+        void send(std::string json);
 
     private:
         void listen();
