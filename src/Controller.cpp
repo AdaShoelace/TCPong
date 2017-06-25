@@ -1,5 +1,6 @@
 #include "../include/Controller.h"
 
+using namespace nlohmann;
 
 Controller::Controller()
     : server(*this), bServer(*this),PADDLE_STEP(80)
@@ -97,11 +98,11 @@ void Controller::playing(sf::Time time)
         {
             if(isLeft)
             {
-                leftPaddlePos.y -= (window.getSize().y/10) * time.asSeconds();
+                leftPaddlePos.y -= (window.getSize().y/3) * time.asSeconds();
             }
             else
             {
-                rightPaddlePos.y -= (window.getSize().y/10) * time.asSeconds();
+                rightPaddlePos.y -= (window.getSize().y/3) * time.asSeconds();
             }
         }
 
@@ -109,16 +110,33 @@ void Controller::playing(sf::Time time)
         {
             if(isLeft)
             {
-                leftPaddlePos.y += (window.getSize().y/10) * time.asSeconds();
+                leftPaddlePos.y += (window.getSize().y/3) * time.asSeconds();
             }
             else
             {
-                rightPaddlePos.y += (window.getSize().y/10) * time.asSeconds();
+                rightPaddlePos.y += (window.getSize().y/3) * time.asSeconds();
             }
         }
     }
     leftPaddle.setPosition(leftPaddlePos);
     rightPaddle.setPosition(rightPaddlePos);
+    sf::Vector2u winSize = window.getSize();
+    json gameState = {
+        {"left",
+            {
+                {"x", leftPaddlePos.x/winSize.x},
+                {"y", leftPaddlePos.y/winSize.y}
+            }
+        },
+        {"right",
+            {
+                {"x", rightPaddlePos.x/winSize.x},
+                {"y", rightPaddlePos.y/winSize.y}
+            }
+        },
+        
+    };
+    server.send(gameState.dump());
     window.draw(leftPaddle);
     window.draw(rightPaddle);
     sf::Text text("PLAYING", font, 30);
@@ -163,5 +181,19 @@ void Controller::checkPollEvent()
         {
             window.close();
         }
+    }
+}
+
+void Controller::receivedData(nlohmann::json j)
+{
+    if(isLeft)
+    {
+        rightPaddlePos.x = j["right"]["x"];
+        rightPaddlePos.y = j["right"]["y"];
+    }
+    else
+    {
+        leftPaddlePos.x = j["left"]["x"]; 
+        leftPaddlePos.x = j["left"]["y"]; 
     }
 }

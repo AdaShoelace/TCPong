@@ -1,6 +1,9 @@
 #include "../include/Server.h"
 #include "../include/Controller.h"
+#include "../include/json.hpp"
 #include <iostream>
+
+using namespace nlohmann;
 
 Server::Server(Controller& controller)
     : controller(controller),
@@ -54,14 +57,19 @@ void Server::talk()
             switch(status)
             {
                 case sf::TcpSocket::Done:
-                    {
+                    { 
                         std::string message;
                         packet >> message;
-                        std::clog << "Message from player:" << message << std::endl;
                         if(message == "Okej!")
                         {
                             std::clog << "Received okay!" << std::endl;
                             controller.successfullyConnected(false);
+                        }
+                        else
+                        {
+                            json j = json::parse(message);
+                            std::clog << j.dump() << std::endl;
+                            controller.receivedData(j);
                         }
                         break;
                     }
@@ -89,4 +97,11 @@ void Server::accept(std::string ipAddress)
     session.setBlocking(true);
     listeningState = PLAYING;
     std::clog << "Trying to connect to: " << ipAddress << std::endl;
+}
+
+void Server::send(std::string json)
+{
+    sf::Packet packet;
+    packet << json;
+    session.send(packet); 
 }
