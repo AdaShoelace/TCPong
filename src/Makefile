@@ -1,14 +1,17 @@
+CC = g++
+CFLAGS = -std=c++11 -Wall -pthread
+
 Pong: Controller.o 
-	g++ -std=c++11 -Wall -pthread -o Pong main.cpp  Controller.o BroadcastServer.o Server.o -lsfml-window -lsfml-system -lsfml-graphics -lsfml-network
+	$(CC) $(CFLAGS) -o Pong main.cpp  Controller.o BroadcastServer.o Server.o -lsfml-window -lsfml-system -lsfml-graphics -lsfml-network
 
-Controller: BroadcastServer.o Server.o
-	g++ -std=c++11 -Wall -pthread -o Controller.o -c Controller.cpp -lsfml-window -lsfml-graphics
+Controller.o: BroadcastServer.o Server.o
+	$(CC) $(CFLAGS) -o Controller.o -c Controller.cpp -lsfml-window -lsfml-graphics
 
-BroadcastServer:
-	g++ -std=c++11 -Wall -pthread -o BroadcastServer.o -c BroadcastServer.cpp -lsfml-network -lsfml-system
+BroadcastServer.o: Server.o
+	$(CC) $(CFLAGS) -o BroadcastServer.o -c BroadcastServer.cpp -lsfml-network -lsfml-system
 
-Server:
-	g++ -std=c++11 -Wall -pthread -o Server.o -c Server.cpp -lsfml-network
+Server.o:
+	$(CC) $(CFLAGS) -o Server.o -c Server.cpp -lsfml-network
 
 clean:
-	rm -rf Pong *.o
+	rm Pong *.o
