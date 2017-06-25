@@ -199,12 +199,20 @@ void Controller::receivedData(nlohmann::json j)
     }
     else
     {
-        float x = j["left"]["x"];
-        x *= windowSize.x;
-        leftPaddlePos.x = x;
+        float rx = j["right"]["x"];
+        rx *= windowSize.x;
+        rightPaddlePos.x = rx;
 
-        float y = j["left"]["y"];
-        y *= windowSize.y;
-        leftPaddlePos.y = y;
+        float ry = j["right"]["y"];
+        ry *= windowSize.y;
+        rightPaddlePos.y = ry;
+
+        float lx = j["left"]["x"];
+        lx *= windowSize.x;
+        leftPaddlePos.x = lx;
+
+        float ly = j["left"]["y"];
+        ly *= windowSize.y;
+        leftPaddlePos.y = ly;
     }
 }
