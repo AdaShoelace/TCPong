@@ -61,6 +61,7 @@ void Server::talk()
                         if(message == "Okej!")
                         {
                             std::clog << "Received okay!" << std::endl;
+                            controller.successfullyConnected(false);
                         }
                         break;
                     }
