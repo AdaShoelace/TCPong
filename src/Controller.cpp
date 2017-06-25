@@ -186,14 +186,25 @@ void Controller::checkPollEvent()
 
 void Controller::receivedData(nlohmann::json j)
 {
+    sf::Vector2u windowSize = window.getSize();
     if(isLeft)
     {
-        rightPaddlePos.x = j["right"]["x"];
-        rightPaddlePos.y = j["right"]["y"];
+        float x = j["right"]["x"];
+        x *= windowSize.x;
+        rightPaddlePos.x = x;
+
+        float y = j["right"]["y"];
+        y *= windowSize.y;
+        rightPaddlePos.y = y;
     }
     else
     {
-        leftPaddlePos.x = j["left"]["x"]; 
-        leftPaddlePos.x = j["left"]["y"]; 
+        float x = j["left"]["x"];
+        x *= windowSize.x;
+        leftPaddlePos.x = x;
+
+        float y = j["left"]["y"];
+        y *= windowSize.y;
+        leftPaddlePos.y = y;
     }
 }
