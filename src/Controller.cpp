@@ -152,6 +152,18 @@ void Controller::playing(sf::Time time)
         };
          
     }
+    else
+    {
+        gameState = {
+            {"right",
+                {
+                    {"x", leftPaddlePos.x/winSize.x},
+                    {"y", leftPaddlePos.y/winSize.y}
+                }
+            }
+        };
+    
+    }
 
     server.send(gameState.dump());
     window.draw(leftPaddle);
@@ -216,6 +228,7 @@ void Controller::receivedData(nlohmann::json j)
     }
     else
     {
+        /*
         float rx = j["right"]["x"];
         rx *= windowSize.x;
         rightPaddlePos.x = rx;
@@ -223,8 +236,8 @@ void Controller::receivedData(nlohmann::json j)
         float ry = j["right"]["y"];
         ry *= windowSize.y;
         rightPaddlePos.y = ry;
+        */
 
-        /*
         float lx = j["left"]["x"];
         lx *= windowSize.x;
         leftPaddlePos.x = lx;
@@ -232,6 +245,5 @@ void Controller::receivedData(nlohmann::json j)
         float ly = j["left"]["y"];
         ly *= windowSize.y;
         leftPaddlePos.y = ly;
-        */
     }
 }
