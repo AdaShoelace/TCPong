@@ -121,6 +121,7 @@ void Controller::playing(sf::Time time)
     leftPaddle.setPosition(leftPaddlePos);
     rightPaddle.setPosition(rightPaddlePos);
     sf::Vector2u winSize = window.getSize();
+    /*
     json gameState = {
         {"left",
             {
@@ -136,6 +137,22 @@ void Controller::playing(sf::Time time)
         },
         
     };
+    */
+
+    json gameState;
+    if(isLeft)
+    {
+        gameState = {
+            {"left",
+                {
+                    {"x", leftPaddlePos.x/winSize.x},
+                    {"y", leftPaddlePos.y/winSize.y}
+                }
+            }
+        };
+         
+    }
+
     server.send(gameState.dump());
     window.draw(leftPaddle);
     window.draw(rightPaddle);
@@ -207,6 +224,7 @@ void Controller::receivedData(nlohmann::json j)
         ry *= windowSize.y;
         rightPaddlePos.y = ry;
 
+        /*
         float lx = j["left"]["x"];
         lx *= windowSize.x;
         leftPaddlePos.x = lx;
@@ -214,5 +232,6 @@ void Controller::receivedData(nlohmann::json j)
         float ly = j["left"]["y"];
         ly *= windowSize.y;
         leftPaddlePos.y = ly;
+        */
     }
 }
