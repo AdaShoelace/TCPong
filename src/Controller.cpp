@@ -145,8 +145,8 @@ void Controller::playing(sf::Time time)
         gameState = {
             {"left",
                 {
-                    {"x", leftPaddlePos.x/winSize.x},
-                    {"y", leftPaddlePos.y/winSize.y}
+                    {"x", (float)leftPaddlePos.x/winSize.x},
+                    {"y", (float)leftPaddlePos.y/winSize.y}
                 }
             }
         };
@@ -157,8 +157,8 @@ void Controller::playing(sf::Time time)
         gameState = {
             {"right",
                 {
-                    {"x", leftPaddlePos.x/winSize.x},
-                    {"y", leftPaddlePos.y/winSize.y}
+                    {"x", (float)leftPaddlePos.x/winSize.x},
+                    {"y", (float)leftPaddlePos.y/winSize.y}
                 }
             }
         };
